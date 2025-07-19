@@ -143,7 +143,7 @@
   </div>
 
   <script>
-    const cardsData = [
+    const originalCards = [
       { name: "Act", image: "https://i.postimg.cc/fb9Bcs7y/Act.png", message: "It can feel scary but you got this. You’re being guided to move the needle forward in direction of your dreams and the pathway will appear.", reflection: "What is that one thing I’m being guided to act on today?" },
       { name: "Ask", image: "https://i.postimg.cc/VLZR2vD5/Ask.png", message: "Ask and it will appear. Don’t hesitate to ask your spirit team for help, guidance and support. They are waiting to hear from you. From clarity to asking for signs, reach out to them.", reflection: "Is there a message that I have been not open to?" },
       { name: "Co-create", image: "https://i.postimg.cc/Jz9Q4gwL/C0-create.png", message: "This is not an individual journey. This is the age of collaboration and co-creation. Call in the support and resources that you need.", reflection: "How can you become the vortex that pulls all resources towards it to birth your visions?" },
@@ -171,10 +171,20 @@
     const messageText = document.getElementById('messageText');
     const reflectionText = document.getElementById('reflectionText');
 
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
     function displayCards() {
-      cardsData.forEach((card, index) => {
+      cardsContainer.innerHTML = '';
+      const shuffled = shuffle([...originalCards]);
+      shuffled.forEach((card, index) => {
         const img = document.createElement('img');
-        img.src = "https://i.postimg.cc/9fzvkHjv/2.png"; // back of card look
+        img.src = "https://i.postimg.cc/9fzvkHjv/2.png"; // back of card
         img.alt = `Card ${index + 1}`;
         img.onclick = () => showResult(card);
         cardsContainer.appendChild(img);
@@ -192,9 +202,10 @@
     function goHome() {
       resultScreen.style.display = 'none';
       homeScreen.style.display = 'flex';
+      displayCards(); // reshuffle and display again
     }
 
-    // Initialize
+    // On page load
     displayCards();
   </script>
 
